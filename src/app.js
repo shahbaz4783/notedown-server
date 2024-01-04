@@ -1,13 +1,19 @@
 import express from 'express';
-import 'dotenv/config'
+import 'dotenv/config';
+import cors from 'cors';
+import { connectDB } from './config/db.js';
+import { routes } from './routes/router.js';
 
 const app = express();
+app.use(cors());
 
-app.get('/', (req, res) => {
-	res.status(200).json('hello');
-});
+app.use(express.json());
+app.use('/api', routes);
 
-const port = process.env.PORT;
-app.listen(port, () => {
-	console.log(`Listning on ${port}`);
-});
+const port = process.env.PORT || 8000;
+
+connectDB(
+	app.listen(port, () => {
+		console.log(`Listning on ${port}`);
+	})
+);
